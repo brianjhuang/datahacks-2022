@@ -3,13 +3,13 @@
 ## Brian Huang, Koosha Jadbabaei, Vineet Tallavajhalla
 
 ### Contents
-[cleaning](###Data-Cleaning)
+[Data Cleaning](###Data-Cleaning)
 
-[visualization](###Data-Visualization)
+[Data Visualization](###Data-Visualization)
 
-[model and analysis](###Data-Modeling-and-Analysis)
+[Model and Analysis](###Data-Modeling-and-Analysis)
 
-[conclusions](###Conclusions)
+[Conclusions](###Conclusions)
 
 ### Data Cleaning
 
