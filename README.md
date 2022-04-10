@@ -171,7 +171,7 @@ cr = classification_report(y_test, y_test_pred, output_dict = True)
 make_classification(cr);
 ```
 
-![Logistic Regression classification report](Images/lr_cr.png)
+![Logistic Regression classification report](Images/lr_cf.png)
 
 ```Python 
 cm = confusion_matrix(y_test, y_test_pred)
@@ -183,7 +183,7 @@ ax.set_title('Confusion Matrix');
 ax.xaxis.set_ticklabels(['negative', 'neutral', 'positive']); ax.yaxis.set_ticklabels(['negative', 'neutral', 'positive']);
 ```
 
-![Logistic Regression Confusion Matrix](Images/lr_cf.png)
+![Logistic Regression Confusion Matrix](Images/lr_cm.png)
 
 Similar to the NLTK, the logistic regression model is hweavily favoring the neutral class in its predictions. This is unsurprising because we already know there is a signficant class imbalance, so it makes sense that the model will be predicting neutral more often.
 
