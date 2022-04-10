@@ -19,6 +19,36 @@ words_before_cleaning = [word for lst in train['Sentence'] for word in lst.split
 ```
 ![uncleaned text](Images/WordsBeforeCleaning.png)
 
+In order to deal with the noise in our sentences, we removed all stop words, punctuation, and lemmatized (a process that allows us to turn words such as believing and believed into their stems (believe) depending on the context. Lemmeatizing is better than stemming, which just cuts off the stem) our sentences. We also replaced a lot of the abbreviations, using Pandas' native replace command. 
+
+```Python
+
+train['Sentence'] = train['Sentence'].str.replace(' \'s',"")
+train['Sentence'] = train['Sentence'].str.replace('mln', ' million')
+train['Sentence'] = train['Sentence'].str.replace('mn', ' million')
+train['Sentence'] = train['Sentence'].str.replace(' mln', ' million')
+train['Sentence'] = train['Sentence'].str.replace(' mn', ' million')
+train['Sentence'] = train['Sentence'].str.replace(' million', ' million')
+train['Sentence'] = train['Sentence'].str.replace('Oyj', ' oyj ')
+train['Sentence'] = train['Sentence'].str.replace('oyj', ' oyj ')
+train['Sentence'] = train['Sentence'].str.replace(' oyj', ' oyj ')
+train['Sentence'] = train['Sentence'].str.replace('oyj ', ' oyj ')
+train['Sentence'] = train['Sentence'].str.replace(' oyj ', ' Nokia')
+
+from nltk.corpus import stopwords
+punc = '''!()-[]{};:'"\,<>./?@#%^&*_~'''
+lemmatizer = WordNetLemmatizer()
+
+def removeStop(sentence):
+    words = []
+    for word in sentence.split():
+        if word.lower() not in stopwords.words('english') and word.lower() not in punc:
+            words.append(lemmatizer.lemmatize(word))
+    return words
+
+train['Cleaned Text'] = train['Sentence'].apply(removeStop)
+```
+
 ### Data Visualization
 
 ### Data Modeling and Analysis 
