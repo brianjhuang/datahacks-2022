@@ -13,8 +13,8 @@
 - [Conclusions](###Conclusions)
 
 ### Data Cleaning
-We started cleaning by looking for the words that occured most in our dataset. To do this, we iterated through each of the sentences, extracting the words and appendning them, to a list.
-```Python
+We started cleaning by looking for the words that occured most in our dataset. To do this, we iterated through each of the sentences and added the values to a counter. Right away, we see issues with the words that are occuring the most frequently. Many of these words are either stop words, puncutation, or abbreviations of words like 'million' (which in this case is abbreviated to `mln` or `mn`).
+``` Python
 words_before_cleaning = [word for lst in train['Sentence'] for word in lst.split()]
 ```
 ![uncleaned text](Images/WordsBeforeCleaning.png)
