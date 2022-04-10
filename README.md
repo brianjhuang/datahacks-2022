@@ -96,7 +96,7 @@ ax.set_title('Confusion Matrix');
 ax.xaxis.set_ticklabels(['negative', 'neutral', 'positive']); ax.yaxis.set_ticklabels(['negative', 'neutral', 'positive']);
 ```
 
-![Confusion Matrix]()
+![Confusion Matrix](Images/confusion_matrix.png)
 
 Based on the confusion matrix, it can be examined that an overwhelming amount of our model's predictions are in the neutral class. To put it simply, the VADER model doesn't see much positive/negative sentiment from each of the sentences. A reason for this could be the fact that the VADER model was not trained on data similar to the provided dataset.
 
@@ -171,7 +171,7 @@ cr = classification_report(y_test, y_test_pred, output_dict = True)
 make_classification(cr);
 ```
 
-![Logistic Regression classification report]()
+![Logistic Regression classification report](Images/lr_cr.png)
 
 ```Python 
 cm = confusion_matrix(y_test, y_test_pred)
@@ -183,7 +183,7 @@ ax.set_title('Confusion Matrix');
 ax.xaxis.set_ticklabels(['negative', 'neutral', 'positive']); ax.yaxis.set_ticklabels(['negative', 'neutral', 'positive']);
 ```
 
-![Logistic Regression Confusion Matrix]()
+![Logistic Regression Confusion Matrix](Images/lr_cf.png)
 
 Similar to the NLTK, the logistic regression model is hweavily favoring the neutral class in its predictions. This is unsurprising because we already know there is a signficant class imbalance, so it makes sense that the model will be predicting neutral more often.
 
@@ -246,8 +246,9 @@ roberta_text_sentiment(input())
 
 For example, if we were to input the sentence "We love datahacks!!!", we find values of {'negative': 0.002, 'neutral': 0.023, 'positive': 0.975} sentiment. 
 
+From evalutating our roBERTa Model, we find that the results on the training set perform much better than the previous models attempted. From comparing the actuals to the predicted, we found that the model had an accuracy of around 75.53%. 
 
-
+With an accuracy of roughly 75%, the roBERTA based sentiment model clearly outperforms the rest and will be our final model to use on the test dataset. This model also favors the neutral class as seen above but this is again intuitive because of the class imbalance as seen in other models. Again, we think this model is extremely powerful because it is trained on Tweets which we would argue closely resembles the training data. Cosequetnyl, we are extremely happy with the results as 75% is a great accuracy with regards to the fact that this is a multi-label classification task with a benchmark of 33%.
 
 ### Conclusions
 
