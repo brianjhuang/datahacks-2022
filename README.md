@@ -80,7 +80,7 @@ def make_classification(cr):
 cr = classification_report(df['Sentiment'], df['NLTK Sentiment'], output_dict = True)
 make_classification(cr);
 ```
-![Vader Confusion Matrix]()
+![Vader Confusion Matrix](Images/vader_cfs.png)
 
 ### Conclusions
 
