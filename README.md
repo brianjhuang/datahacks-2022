@@ -60,7 +60,7 @@ As we can see, a majority of sentences are neutral, which is something we should
 
 To begin, we want to create a simple baseline model. VADER (Valence Aware Dictionary and Sentiment Reasoner) is a lexicon and rule-based tool for sentiment analysis. From the NLTK library, VADER provides text positivity/neutrality/negativity along with a compound score (sentiment intensity). VADER is a pretrained model, so we can simply use our entire training set for our model performance benchmark.
 
-'''Python
+```Python
 
 nltk_scores = [] # Applying VADER sentiment on each row, taking the max, and putting that into dataframe
 for i in list(df["Sentence"]):
@@ -73,7 +73,7 @@ for i in list(df["Sentence"]):
 df["NLTK Sentiment"] = nltk_scores # New NLTK output column
 df = df.replace("neu", "neutral").replace("pos", "positive").replace("neg", "negative")
 
-'''
+```
 
 ### Conclusions
 
