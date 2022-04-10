@@ -17,7 +17,7 @@ We started cleaning by looking for the words that occured most in our dataset. T
 ```Python
 words_before_cleaning = [word for lst in train['Sentence'] for word in lst.split()]
 ```
-![uncleaned text](uncleaned_text.png)
+![uncleaned text](Images/WordsBeforeCleaning.png)
 
 ### Data Visualization
 
