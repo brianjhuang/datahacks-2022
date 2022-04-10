@@ -1,5 +1,5 @@
 # Hey Roberta, how do you feel about this stock?
-# Financial Sentiment Analysis with roBERTa: DataHacks 2022 Advanced Track
+## Financial Sentiment Analysis with roBERTa: DataHacks 2022 Advanced Track
 
 ## Brian Huang, Koosha Jadbabaei, Vineet Tallavajhala 
 
