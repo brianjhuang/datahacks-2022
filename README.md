@@ -4,8 +4,11 @@
 
 ### Contents
 [cleaning](#Data Cleaning)
+
 [visualization](#Data Visualization)
+
 [model and analysis](#Data Modeling and Analysis)
+
 [conclusions](#Conclusions)
 
 ### Data Cleaning
