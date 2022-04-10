@@ -82,6 +82,173 @@ make_classification(cr);
 ```
 ![Vader Confusion Matrix](Images/vader_cfs.png)
 
+The VADER model has an accuracy of 54% on our training set. This is not the best, but still solid seeing that this is a multi-label classification task (so a model that randomly predicts Positive, Negative, or Netural will have a 33% accuracy). In addition, the chart above shows the precision and recall for our model (for each class individually and the macro/weighted averages as well). Still, there are some interesting insights we can gain from the performance of this model by looking at a confusion matrix.
+
+```Python 
+
+# Using seaborn to plot confusion matrix for 3 labels
+cm = confusion_matrix(list(df["Sentiment"]), list(df["NLTK Sentiment"]))
+ax = plt.subplot()
+sns.heatmap(cm, annot=True, fmt='g', ax=ax, cmap="YlGnBu"); 
+# labels, title and ticks
+ax.set_xlabel('Predicted labels');ax.set_ylabel('True labels'); 
+ax.set_title('Confusion Matrix'); 
+ax.xaxis.set_ticklabels(['negative', 'neutral', 'positive']); ax.yaxis.set_ticklabels(['negative', 'neutral', 'positive']);
+```
+
+![Confusion Matrix]()
+
+Based on the confusion matrix, it can be examined that an overwhelming amount of our model's predictions are in the neutral class. To put it simply, the VADER model doesn't see much positive/negative sentiment from each of the sentences. A reason for this could be the fact that the VADER model was not trained on data similar to the provided dataset.
+
+In a 3-label classification task, a model that outputs the same class 99% of the time, with a balanced dataset, should have an accuracy around 33%. Yet the fact that this dataset is so imbalanced (about 50% neutral), in favoring neutral predictions, this model performs pretty well. Still, we will keep an eye on this model's performance and move on to some more complicated/complex models
+
+#### TFIDF + Simple Classification
+Next, we decided to test out different simple classification models with our text data transformed by TF-IDF.
+
+TF-IDF stands for Term Frequency-Inverse Document Frequency. It is a measure that evaluates how relevant each word is to a sentence in a collection of sentences (or documents). It is done by multiplying how many times a word appears in a document by the inverse document frequency of the word over all the documents.
+
+In our use case, TFIDF is extremely useful in that it can transform our data, in the form of text, into a numerical vector that our machines can interpret. Using these vectors with the new text vectorization, we can apply different classification models into algorithms like Logistic Regression, Naive Bayes and Support Vector Machines to achieve great model performance and successfully determine the sentiment of a given sentence.
+
+```Python
+
+# Lemmatizing, removing stop wrods, and removing punctuation (data cleaning)
+# Creating 
+
+lemmatizer = WordNetLemmatizer()
+def removeStopTotal(sentence):
+    words = []
+    punc = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+    for word in sentence.split():
+        if word.lower() not in stopwords.words('english') and word.lower() not in punc:
+            lemon = lemmatizer.lemmatize(word.lower())
+            words.append(lemon)
+    return ' '.join(words)
+df["Sentence No Stop"] = df["Sentence"].apply(removeStopTotal)
+df.head()
+
+# Creating a simple train test split (75/25)
+X_train,X_test,y_train, y_test = train_test_split(df["Sentence No Stop"], df["Sentiment"], test_size=0.25)
+
+# Vectorizing our new column (without stop words)
+
+vectorizer = TfidfVectorizer()
+tf_x_train = vectorizer.fit_transform(X_train)
+tf_x_test = vectorizer.transform(X_test)
+```
+
+#### Model Selection
+
+We decided to select 5 popular data classification models and test each model on the data to see which performs better. Some of our models are simpler like Logistic Regression, while others are more complex like Radial Support Vector Classifiers.
+
+Our idea is to loop run each model on our data and select the model with the best accuracy as our top model. With that model, we can look deeper (confusion matrix) and even look into hyparameter tuning using grid search with 5 fold validation.
+
+```Python
+
+# Initializing each of our models
+
+models = [LogisticRegression(), MultinomialNB(), KNeighborsClassifier(), DecisionTreeClassifier(), LinearSVC()]
+
+# Looping through, fitting each model on TFIDF train data, creating predictions, and analyzing accuracy
+
+model_acc = {}
+for clf in models:
+    string_mod = str(clf)
+    clf.fit(tf_x_train,y_train)
+    y_test_pred = clf.predict(tf_x_test)
+    a = accuracy_score(y_test, y_test_pred)
+    model_acc[string_mod] = a
+```
+We recieve results of {'LogisticRegression()': 0.6806569343065694, 'MultinomialNB()': 0.6596715328467153, 'KNeighborsClassifier()': 0.593978102189781, 'DecisionTreeClassifier()': 0.5894160583941606, 'LinearSVC()': 0.6678832116788321}.
+
+From this, it appears that logistic regression has the best accuracy at around 68%. Multinomial Naive Bayes and the SVM are also very close at around 65-66%, and KNeighbors Classifier and Decision Tree Classifier are the worst performing at around 59%. Since logistic regression performed the best, we can take a deeper look at it:
+
+```Python
+
+clf = LogisticRegression()
+clf.fit(tf_x_train,y_train)
+y_test_pred = clf.predict(tf_x_test)
+cr = classification_report(y_test, y_test_pred, output_dict = True)
+make_classification(cr);
+```
+
+![Logistic Regression classification report]()
+
+```Python 
+cm = confusion_matrix(y_test, y_test_pred)
+ax = plt.subplot()
+sns.heatmap(cm, annot=True, fmt='g', ax=ax, cmap="YlGnBu"); 
+# labels, title and ticks
+ax.set_xlabel('Predicted labels');ax.set_ylabel('True labels'); 
+ax.set_title('Confusion Matrix'); 
+ax.xaxis.set_ticklabels(['negative', 'neutral', 'positive']); ax.yaxis.set_ticklabels(['negative', 'neutral', 'positive']);
+```
+
+![Logistic Regression Confusion Matrix]()
+
+Similar to the NLTK, the logistic regression model is hweavily favoring the neutral class in its predictions. This is unsurprising because we already know there is a signficant class imbalance, so it makes sense that the model will be predicting neutral more often.
+
+From here, we could take our top 3 models (Logistic Regression, Multinomial Naive Bayes, and SVM) and hyperparameter tune each one to see if we can increase our accuracy. But before we do this, we want to try out an even more complex model using Deep Learning to see if it is necessary to hyperparameter tune these simpler models in the first place.
+
+#### roBERTa base for Sentiment Analysis
+
+roBERTa base for sentiment analysis is a model from HuggingFace that is "trained on ~58M tweets and finetuned for sentiment analysis with the TweetEval benchmark" (https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment). This model is extremely interesting for our use case because it is already pretrained on tweets, which closely resembles the style of the data for this project. Similar to VADER, since this is a pretrained model, we will use the whole of the training dataset as a benchmark for model performance.
+
+```Python
+# Initializing model and requests
+
+task='sentiment'
+MODEL = f"cardiffnlp/twitter-roberta-base-{task}"
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+
+# download label mapping
+labels=[]
+mapping_link = f"https://raw.githubusercontent.com/cardiffnlp/tweeteval/main/datasets/{task}/mapping.txt"
+with urllib.request.urlopen(mapping_link) as f:
+    html = f.read().decode('utf-8').split("\n")
+    csvreader = csv.reader(html, delimiter='\t')
+labels = [row[1] for row in csvreader if len(row) > 1]
+
+model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+model.save_pretrained(MODEL)
+```
+
+```Python
+def roberta_text_sentiment(text):
+    """
+    Given a tweet, what is the sentiment?
+    """
+    
+    def preprocess(text):
+        new_text = []
+        for t in text.split(" "):
+            t = '@user' if t.startswith('@') and len(t) > 1 else t
+            t = 'http' if t.startswith('http') else t
+            new_text.append(t)
+        return " ".join(new_text)
+    text = preprocess(text)
+    encoded_input = tokenizer(text, return_tensors='pt')
+    output = model(**encoded_input)
+    scores = output[0][0].detach().numpy()
+    scores = softmax(scores)
+
+    ranking = np.argsort(scores)
+    ranking = ranking[::-1]
+    dictionary = {}
+    for i in range(scores.shape[0]):
+        l = labels[ranking[i]]
+        s = scores[ranking[i]]
+        dictionary[l] = np.round(float(s), 3)
+    return dictionary
+
+roberta_text_sentiment(input())
+```
+
+For example, if we were to input the sentence "We love datahacks!!!", we find values of {'negative': 0.002, 'neutral': 0.023, 'positive': 0.975} sentiment. 
+
+
+
+
 ### Conclusions
 
 <p>From conducting sentiment analysis on the dataset with various approaches, we found that the roBERTa based sentiment analyzer did the best at effectively predicting the sentiment of sentences about financial markets. Although there may be inaccuracies in the prediction, since there are various complexities in text data including sarcasm and hidden meaning, we found our model does a fairly good job in capturing most of these complexities and determines sentiment effectively. 
