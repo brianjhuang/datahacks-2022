@@ -7,8 +7,7 @@
 <p> In today’s age of growing information, the intersection between data science and finance has grown tremendously. In this report, we aim to find a competitive advantage in the market using sentiment analysis on a data set of sentences that resembles tweets (sentences with a max of two hundred eighty characters). Prior to delving into sentiment analysis, we first cleaned the data including replacement and removing stop words (during EDA). We determined later that cleaning the data ultimately hurt the results for most models, so much of the cleaning conducted was ultimately reverted to optimize performance. To determine sentiment, we tried various approaches including more naive solutions such as NLTK vader and TFIDF with simple classification algorithms. From these models we received subpar results which inclined us to look towards more complex solutions. We found that using Hugging Face’s roBERTa based sentiment analyzer gave the best results on the given data set primarily optimizing for accuracy. </p>
 
 ### Contents
-- [Data Cleaning](###Data-Cleaning)
-- [Data Visualization](###Data-Visualization)
+- [Data Cleaning](###Data-Cleaning and Visualization)
 - [Model and Analysis](###Data-Modeling-and-Analysis)
 - [Conclusions](###Conclusions)
 
