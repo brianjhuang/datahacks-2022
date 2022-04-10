@@ -55,6 +55,8 @@ Doing this provides us a much cleaner dataset to work with.
 From here another important factor to consider is seeing the distribution of our sentiments. This prevents us from running into any class imbalances when we model later on.
 ![distribution](Images/SentimentDistribution.png)
 
+As we can see, a majority of sentences are neutral, which is something we should be cautious about as we model.
+
 ### Data Modeling and Analysis 
 
 ### Conclusions
