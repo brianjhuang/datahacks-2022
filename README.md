@@ -1,6 +1,9 @@
-# Analyzing Stock Sentiment using Roberta
+# Hey Roberta, how do you feel about this stock?
+# Financial Sentiment Analysis with roBERTa
 
-## Brian Huang, Koosha Jadbabaei, Vineet Tallavajhala
+## Brian Huang, Koosha Jadbabaei, Vineet Tallavajhala 
+
+### Team Name: 3 Switch
 
 ## Introduction
 
