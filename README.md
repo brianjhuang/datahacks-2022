@@ -185,7 +185,7 @@ ax.xaxis.set_ticklabels(['negative', 'neutral', 'positive']); ax.yaxis.set_tickl
 
 ![Logistic Regression Confusion Matrix](Images/lr_cm.png)
 
-Similar to the NLTK, the logistic regression model is hweavily favoring the neutral class in its predictions. This is unsurprising because we already know there is a signficant class imbalance, so it makes sense that the model will be predicting neutral more often.
+Similar to the NLTK, the logistic regression model is heavily favoring the neutral class in its predictions. This is unsurprising because we already know there is a signficant class imbalance, so it makes sense that the model will be predicting neutral more often.
 
 From here, we could take our top 3 models (Logistic Regression, Multinomial Naive Bayes, and SVM) and hyperparameter tune each one to see if we can increase our accuracy. But before we do this, we want to try out an even more complex model using Deep Learning to see if it is necessary to hyperparameter tune these simpler models in the first place.
 
