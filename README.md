@@ -1,6 +1,6 @@
 # Analyzing Stock Sentiment using Roberta
 
-## Brian Huang, Koosha Jadbabaei, Vineet Tallavajhalla
+## Brian Huang, Koosha Jadbabaei, Vineet Tallavajhala
 
 ## Introduction
 
