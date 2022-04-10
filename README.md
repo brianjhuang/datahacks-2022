@@ -50,7 +50,7 @@ train['Cleaned Text'] = train['Sentence'].apply(removeStop)
 ```
 
 Doing this provides us a much cleaner dataset to work with.
-![cleaned text](WordCloud.png)
+![cleaned text](Images/WordCloud.png)
 
 ### Data Visualization
 
