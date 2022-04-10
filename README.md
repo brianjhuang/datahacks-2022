@@ -13,7 +13,11 @@
 - [Conclusions](###Conclusions)
 
 ### Data Cleaning
-We started cleaning by looking for 
+We started cleaning by looking for the words that occured most in our dataset. To do this, we iterated through each of the sentences, extracting the words and appendning them, to a list.
+```Python
+words_before_cleaning = [word for lst in train['Sentence'] for word in lst.split()]
+```
+![uncleaned text](uncleaned_text.png)
 
 ### Data Visualization
 
