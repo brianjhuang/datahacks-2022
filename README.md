@@ -52,7 +52,7 @@ train['Cleaned Text'] = train['Sentence'].apply(removeStop)
 ```
 
 Doing this provides us a much cleaner dataset to work with.
-<iframe src = "https://public.tableau.com/views/DataHacks2022-WordCloud/WordCloud?:embed=y&:display_count=no&:showVizHome=no%22" height = 1920 width = 1000 ></iframe>
+<iframe src = "https://public.tableau.com/views/DataHacks2022-WordCloud/WordCloud?:embed=y&:display_count=no&:showVizHome=no%22" height = 1080 width = 600 ></iframe>
 
 From here another important factor to consider is seeing the distribution of our sentiments. This prevents us from running into any class imbalances when we model later on.
 ![distribution](Images/SentimentDistribution.png)
