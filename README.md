@@ -166,7 +166,6 @@ We recieve results of {'LogisticRegression()': 0.6806569343065694, 'MultinomialN
 From this, it appears that logistic regression has the best accuracy at around 68%. Multinomial Naive Bayes and the SVM are also very close at around 65-66%, and KNeighbors Classifier and Decision Tree Classifier are the worst performing at around 59%. Since logistic regression performed the best, we can take a deeper look at it:
 
 ```Python
-
 clf = LogisticRegression()
 clf.fit(tf_x_train,y_train)
 y_test_pred = clf.predict(tf_x_test)
