@@ -19,7 +19,7 @@ We started cleaning by looking for the words that occured most in our dataset. T
 ``` Python
 words_before_cleaning = [word for lst in train['Sentence'] for word in lst.split()]
 ```
-![uncleaned text](Images/WordsBeforeCleaning.png)
+<iframe src = "https://public.tableau.com/views/DataHacks2022-UncleanedWords_16496357213210/Sheet1?:embed=y&:display_count=no&:showVizHome=no%22" height = 1080 width = 600 ></iframe>
 
 In order to deal with the noise in our sentences, we removed all stop words, punctuation, and lemmatized (a process that allows us to turn words such as believing and believed into their stems (believe) depending on the context. Lemmeatizing is better than stemming, which just cuts off the stem) our sentences. We also replaced a lot of the abbreviations, using Pandas' native replace command. 
 
